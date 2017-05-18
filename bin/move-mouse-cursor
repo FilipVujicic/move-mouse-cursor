@@ -24,16 +24,7 @@ done
 
 
 
-# TODO:
-#
-# Maybe change names of:
-#  createFile
-#
-# Fix comments:
-#  line 67 (# Works out which screen the cursor is on by checking if it is to the right of the left edge for every screen)
-#
-
-
+# Creates a file with the info/variables about the screens that the script can use so it doesn't need to get the screen information every time
 function createFile {
 
 # Gets information about the resolution and positions of the screens from xrandr
