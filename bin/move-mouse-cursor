@@ -69,7 +69,7 @@ echo "numberOfScreens="$numberOfScreens"; xPos=("${xPos[*]}"); xCenter=("${xCent
 
 eval $(xdotool getmouselocation --shell)
 
-# If file does not exist, create the file (Running the script with no parameters also resets the file)
+# If file does not exist, create the file
 if [ ! -f $FILE_PATH ] || [ "$RESET_FILE" == true ]; then
   echo creating file
   createFile
@@ -86,7 +86,7 @@ for ((i=$numberOfScreens-1; i>=0; i--)); do
   fi
 done
 
-# Finds destination screen (screen immediately to the left/right depending on parameter)
+# Finds destination screen (screen immediately to the left)
 if [ "$DIRECTION" == "left" ]; then
   destinationScreen=$((currentScreen - 1))
   if [ "$destinationScreen" -lt 0 ]  # If the cursor is already on the leftmost screen, destination screen will be leftmost screen (or rightmost if wraparound is enabled)
@@ -96,20 +96,19 @@ if [ "$DIRECTION" == "left" ]; then
     else
       destinationScreen=0
     fi
-fi
-
+  fi
 # Same as left, but mirrored
+# Finds destination screen (screen immediately to the right)
 elif [ "$DIRECTION" == "right" ]; then
   destinationScreen=$((currentScreen + 1))
-  if [ "$destinationScreen" -gt "$((numberOfScreens-1))" ]
+  if [ "$destinationScreen" -gt "$((numberOfScreens-1))" ]  # If the cursor is already on the rightmost screen, destination screen will be rightmost screen (or leftmost if wraparound is enabled)
   then
     if [ "$WRAPAROUND" == true ] ; then
       destinationScreen=0
     else
       destinationScreen=$((numberOfScreens-1))
     fi
-fi
-
+  fi
 else
   echo left/right was not specified
   dontMoveCursor=true
